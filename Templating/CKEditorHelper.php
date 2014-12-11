@@ -172,7 +172,9 @@ class CKEditorHelper extends Helper
             ->reset()
             ->setValues($template);
 
-        return sprintf('CKEDITOR.addTemplates("%s", %s);', $name, $this->jsonBuilder->build());
+        $method = isset($config['inline']) && $config['inline'] ? 'inline' : 'replace';
+
+        return sprintf('CKEDITOR.%s("%s", %s);', $method, $id, $this->fixConfigConstants($this->jsonBuilder->build()));    
     }
 
     /**
